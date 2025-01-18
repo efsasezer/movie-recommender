@@ -3,32 +3,45 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
-import gdown
+import os
+import zipfile
 
 class MovieRecommender:
     def __init__(self):
         self.load_data()
         self.prepare_features()
-        
+
     def load_data(self):
         try:
-            
-            self.movies = pd.read_csv('./movie.csv')
-            self.ratings = pd.read_csv('./rating.csv')
-            
+            # Kaggle veri setini indirmek
+            dataset_path = "./movielens-20m-dataset.zip"
+            if not os.path.exists(dataset_path):
+                os.system(
+                    "kaggle datasets download -d grouplens/movielens-20m-dataset -p ./"
+                )
+
+            # Zip dosyasını çıkar
+            with zipfile.ZipFile(dataset_path, "r") as zip_ref:
+                zip_ref.extractall("./")
+
+            # Veri dosyalarını oku
+            self.movies = pd.read_csv("./movie.csv")
+            self.ratings = pd.read_csv("./rating.csv")
+
             # Gereksiz sütunları kaldır
-            if 'timestamp' in self.ratings.columns:
-                self.ratings = self.ratings.drop('timestamp', axis=1)
-                
+            if "timestamp" in self.ratings.columns:
+                self.ratings = self.ratings.drop("timestamp", axis=1)
+
             # Veri setini küçült (performans için)
             self.ratings = self.ratings.head(100000)
             self.movies = self.movies[
-                self.movies['movieId'].isin(self.ratings['movieId'].unique())
+                self.movies["movieId"].isin(self.ratings["movieId"].unique())
             ]
         except Exception as e:
             st.error(f"Veri yükleme hatası: {str(e)}")
             raise
-        
+
+
     def prepare_features(self):
         try:
             # Popülerlik istatistikleri
