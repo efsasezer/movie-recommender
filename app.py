@@ -15,7 +15,7 @@ class MovieRecommender:
             
             # Google Drive'dan veri setlerini indirme 
             self.movie_url = 'https://drive.google.com/file/d/1lvWbK8UBRD6TOar3etP0IU6gxv52YR72/view?usp=drive_link' 
-            self.rating_url = 'https://drive.google.com/file/d/1lvWbK8UBRD6TOar3etP0IU6gxv52YR72/view?usp=drive_link'
+            self.rating_url = 'https://drive.google.com/file/d/1MLupnNHLXXLr6N-oXHzw02MvvXvrTCzO/view?usp=drive_link'
             gdown.download(self.movie_url, 'movie.csv', quiet=False) 
             gdown.download(self.rating_url, 'rating.csv', quiet=False) 
             # CSV dosyalarını yükleme 
