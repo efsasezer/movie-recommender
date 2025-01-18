@@ -13,16 +13,8 @@ class MovieRecommender:
     def load_data(self):
         try:
             
-            # Google Drive'dan veri setlerini indirme 
-            self.movie_url = 'https://drive.google.com/uc?id=1lvWbK8UBRD6TOar3etP0IU6gxv52YR72'
-            self.rating_url = 'https://drive.google.com/uc?id=1MLupnNHLXXLr6N-oXHzw02MvvXvrTCzO'
-
-            gdown.download(self.movie_url, 'movie.csv', quiet=False) 
-            gdown.download(self.rating_url, 'rating.csv', quiet=False)
-
-            # CSV dosyalarını yükleme 
-            self.movies = pd.read_csv('movie.csv') 
-            self.ratings = pd.read_csv('rating.csv')
+            self.movies = pd.read_csv('./movie.csv')
+            self.ratings = pd.read_csv('./rating.csv')
             
             # Gereksiz sütunları kaldır
             if 'timestamp' in self.ratings.columns:
