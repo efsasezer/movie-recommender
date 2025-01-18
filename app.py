@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
- import gdown
+import gdown
 
 class MovieRecommender:
     def __init__(self):
