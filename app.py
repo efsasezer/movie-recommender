@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
 import plotly.express as px
+ import gdown
 
 class MovieRecommender:
     def __init__(self):
@@ -11,9 +12,15 @@ class MovieRecommender:
         
     def load_data(self):
         try:
-            # Veri setlerini yükle
-            self.movies = pd.read_csv('./movie.csv')
-            self.ratings = pd.read_csv('./rating.csv')
+            
+            # Google Drive'dan veri setlerini indirme 
+            self.movie_url = 'https://drive.google.com/file/d/1lvWbK8UBRD6TOar3etP0IU6gxv52YR72/view?usp=drive_link' 
+            self.rating_url = 'https://drive.google.com/uc?id=YOUR_RATING_FILE_ID'
+            gdown.download(self.movie_url, 'movie.csv', quiet=False) 
+            gdown.download(self.rating_url, 'rating.csv', quiet=False) 
+            # CSV dosyalarını yükleme 
+            self.movies = pd.read_csv('movie.csv') 
+            self.ratings = pd.read_csv('rating.csv')
             
             # Gereksiz sütunları kaldır
             if 'timestamp' in self.ratings.columns:
